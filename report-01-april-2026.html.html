@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harley Court — Quiz Performance Report | Report 1 of 12</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: #E4E5E5;
+    color: #1a1a1a;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 60px 70px;
+  }
+
+  /* HEADER */
+  .header {
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .clinic-name {
+    font-size: 28px;
+    font-weight: normal;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+  }
+  .report-label {
+    text-align: right;
+    font-family: 'Arial', sans-serif;
+  }
+  .report-label .month {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    font-weight: 700;
+  }
+  .report-label .title {
+    font-size: 11px;
+    color: #888;
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .report-label .period {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 3px;
+    font-style: italic;
+  }
+
+  /* INTRO NOTE */
+  .intro {
+    background: #f5f5f5;
+    border-left: 3px solid #1a1a1a;
+    padding: 18px 22px;
+    margin-bottom: 42px;
+    font-family: 'Arial', sans-serif;
+    font-size: 13px;
+    color: #444;
+    line-height: 1.75;
+  }
+
+  /* SECTION HEADER */
+  .section-label {
+    font-family: 'Arial', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #888;
+    font-weight: 700;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #E4E5E5;
+    padding-bottom: 6px;
+  }
+
+  /* KPI CARDS */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  .kpi-card {
+    background: #f9f9f9;
+    border: 1px solid #E4E5E5;
+    border-top: 3px solid #1a1a1a;
+    padding: 20px 10px 16px;
+    text-align: center;
+  }
+  .kpi-number {
+    font-size: 34px;
+    color: #1a1a1a;
+    font-weight: normal;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .kpi-label {
+    font-family: 'Arial', sans-serif;
+    font-size: 10px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    line-height: 1.4;
+  }
+
+  /* FUNNEL */
+  .funnel-section {
+    margin-bottom: 48px;
+  }
+  .funnel-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 14px;
+  }
+  .funnel-stage {
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    color: #555;
+    width: 165px;
+    flex-shrink: 0;
+  }
+  .funnel-bar-wrap {
+    flex: 1;
+    background: #E4E5E5;
+    height: 30px;
+    position: relative;
+  }
+  .funnel-bar {
+    height: 100%;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+  }
+  .funnel-bar.mid {
+    background: #555;
+  }
+  .funnel-bar.light {
+    background: #888;
+  }
+  .funnel-bar.accent {
+    background: #333;
+  }
+  .funnel-count {
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .funnel-pct {
+    font-family: 'Arial', sans-serif;
+    font-size: 11.5px;
+    color: #999;
+    width: 50px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* TWO-COL TABLES */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Arial', sans-serif;
+    font-size: 12.5px;
+  }
+  .data-table th {
+    text-align: left;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #bbb;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #E4E5E5;
+  }
+  .data-table th:last-child { text-align: right; }
+  .data-table td {
+    padding: 9px 0;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+    vertical-align: middle;
+  }
+  .data-table td:last-child { text-align: right; }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .pill {
+    display: inline-block;
+    background: #f5f5f5;
+    border: 1px solid #E4E5E5;
+    color: #555;
+    font-size: 11px;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+
+  /* INSIGHT BOXES */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .insight-box {
+    border: 1px solid #E4E5E5;
+    padding: 22px 22px;
+  }
+  .insight-heading {
+    font-family: 'Arial', sans-serif;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+  }
+  .insight-text {
+    font-family: 'Arial', sans-serif;
+    font-size: 12.5px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  /* NEWSLETTER NOTE */
+  .newsletter-note {
+    background: #f9f9f9;
+    border: 1px dashed #ccc;
+    padding: 16px 22px;
+    margin-bottom: 48px;
+    font-family: 'Arial', sans-serif;
+    font-size: 12.5px;
+    color: #666;
+    line-height: 1.65;
+  }
+  .newsletter-note strong {
+    color: #1a1a1a;
+  }
+
+  /* FOOTNOTE */
+  .footnote {
+    border-top: 1px solid #E4E5E5;
+    padding-top: 20px;
+    margin-bottom: 28px;
+    font-family: 'Arial', sans-serif;
+    font-size: 11.5px;
+    color: #999;
+    line-height: 1.7;
+  }
+  .footnote strong {
+    color: #777;
+  }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid #E4E5E5;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand {
+    font-family: 'Arial', sans-serif;
+    font-size: 11px;
+    color: #aaa;
+  }
+  .footer-brand a {
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+  .footer-page {
+    font-family: 'Arial', sans-serif;
+    font-size: 11px;
+    color: #ccc;
+  }
+
+  /* MOBILE */
+  @media (max-width: 620px) {
+    .page { padding: 32px 24px; }
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+    .kpi-grid .kpi-card:nth-child(4),
+    .kpi-grid .kpi-card:nth-child(5) { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr; gap: 32px; }
+    .insight-grid { grid-template-columns: 1fr; }
+    .header-top { flex-direction: column; gap: 12px; }
+    .report-label { text-align: left; }
+    .funnel-stage { width: 120px; font-size: 11px; }
+    .clinic-name { font-size: 22px; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { padding: 30px 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="clinic-name">Harley Court</div>
+      <div class="report-label">
+        <div class="month">Report 1 of 12</div>
+        <div class="title">AI Quiz — Monthly Performance Report</div>
+        <div class="period">12 March – 14 April 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO NOTE -->
+  <div class="intro">
+    Karen, this is your first quiz performance report — and it's a really positive start. Over the past month your quiz has been quietly working away in the background, capturing data on exactly who is visiting your site, what they're concerned about, and how ready they are to take the next step. The numbers below tell a clear story: your audience is engaged, they know what they want, and a significant number of them are new to aesthetic treatments entirely — which is exactly the new business pipeline you're looking to build.
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="section-label">At a Glance — 12 March to 14 April 2026</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-number">26</div>
+      <div class="kpi-label">Quiz Starts</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-number">11</div>
+      <div class="kpi-label">Completions</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-number">42%</div>
+      <div class="kpi-label">Completion Rate</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-number">126</div>
+      <div class="kpi-label">Answers Captured</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-number">2</div>
+      <div class="kpi-label">Booking Clicks</div>
+    </div>
+  </div>
+
+  <!-- FUNNEL -->
+  <div class="funnel-section">
+    <div class="section-label">Visitor Journey — How Far Did They Go?</div>
+
+    <div class="funnel-row">
+      <div class="funnel-stage">Started the quiz</div>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar" style="width:100%"><span class="funnel-count">26 visitors</span></div>
+      </div>
+      <div class="funnel-pct">100%</div>
+    </div>
+
+    <div class="funnel-row">
+      <div class="funnel-stage">Reached a question</div>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar mid" style="width:65%"><span class="funnel-count">13 visitors</span></div>
+      </div>
+      <div class="funnel-pct">50%</div>
+    </div>
+
+    <div class="funnel-row">
+      <div class="funnel-stage">Completed the quiz</div>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar light" style="width:42%"><span class="funnel-count">11 visitors</span></div>
+      </div>
+      <div class="funnel-pct">42%</div>
+    </div>
+
+    <div class="funnel-row">
+      <div class="funnel-stage">Clicked to book</div>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar accent" style="width:8%"><span class="funnel-count">2</span></div>
+      </div>
+      <div class="funnel-pct">8%</div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER NOTE -->
+  <div class="newsletter-note">
+    <strong>A note on upcoming data:</strong> Your monthly newsletter goes out on the 15th–16th of each month and includes a link to the quiz. You may see a small spike in quiz activity shortly after each send — this is a healthy sign of your existing audience re-engaging. From Report 2 onwards, each report will cover a full 14th-to-14th cycle, giving us a clean and consistent month-on-month comparison.
+  </div>
+
+  <!-- TWO-COL TABLES -->
+  <div class="two-col">
+    <div>
+      <div class="section-label">What Are Visitors Concerned About?</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Concern</th><th>Interactions</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lines &amp; Wrinkles</td><td><span class="pill">18 interactions</span></td></tr>
+          <tr><td>Contouring</td><td><span class="pill">15 interactions</span></td></tr>
+          <tr><td>Volume Loss</td><td><span class="pill">6 interactions</span></td></tr>
+          <tr><td>Skin Quality</td><td><span class="pill">5 interactions</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="section-label">How Old Is Your Audience?</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Age Group</th><th>Visitors</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>50s and above</td><td><span class="pill">8 visitors</span></td></tr>
+          <tr><td>40s</td><td><span class="pill">5 visitors</span></td></tr>
+          <tr><td>20s</td><td><span class="pill">4 visitors</span></td></tr>
+          <tr><td>30s</td><td><span class="pill">2 visitors</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-label">What Matters Most to Them?</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Priority</th><th>Visitors</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Longevity of results</td><td><span class="pill">12 interactions</span></td></tr>
+          <tr><td>Natural appearance</td><td><span class="pill">6 interactions</span></td></tr>
+          <tr><td>Value for money</td><td><span class="pill">6 interactions</span></td></tr>
+          <tr><td>Minimal downtime</td><td><span class="pill">2 interactions</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="section-label">Where Are They in Their Journey?</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Stage</th><th>Visitors</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>First time — new to treatments</td><td><span class="pill">12 visitors</span></td></tr>
+          <tr><td>Would like to consult first</td><td><span class="pill">9 visitors</span></td></tr>
+          <tr><td>Ready to book</td><td><span class="pill">8 visitors</span></td></tr>
+          <tr><td>Has had treatments before</td><td><span class="pill">6 visitors</span></td></tr>
+          <tr><td>Regular treatment client</td><td><span class="pill">2 visitors</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="section-label">What This Means for Your Business</div>
+  <div class="insight-grid">
+
+    <div class="insight-box">
+      <div class="insight-heading">Your Ideal Client Is Finding You</div>
+      <div class="insight-text">Lines, wrinkles and contouring are your top two concerns by a clear margin, and your dominant audience is in their 50s. Karen, this is your target demographic engaging with your brand — the quiz is attracting exactly the right people.</div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-heading">A Fresh Pipeline of New Clients</div>
+      <div class="insight-text">12 visitors described themselves as completely new to aesthetic treatments. These aren't existing clients browsing — they are brand new prospects discovering Harley Court, which is precisely the new business growth you set out to achieve.</div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-heading">Warm Leads, Not Cold Enquiries</div>
+      <div class="insight-text">Of the 11 people who completed the quiz, 8 said they're ready to book and a further 9 interactions indicate a desire to consult. These visitors have already told you what they want — they're far warmer than a typical website enquiry.</div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-heading">Results Over Price — Every Time</div>
+      <div class="insight-text">Longevity of results was the standout priority, chosen twice as often as value for money. Your audience is quality-led, Karen. This is useful to know when writing content, running promotions, or training your team on how to handle consultations.</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTNOTE -->
+  <div class="footnote">
+    <strong>A note on the figures:</strong> Google Analytics records every individual interaction with the quiz, so if a visitor started it more than once, went back to change an answer, or engaged with it across multiple sessions, each tap registers separately. This is why the total answers captured (126) appears high relative to the number of starters (26). The figures that count unique individuals — completions (11) and booking clicks (2) — are the cleanest and most meaningful numbers in this report.
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-brand">
+      Report prepared by <strong>Lisa Kent VA</strong> · <a href="/cdn-cgi/l/email-protection#bed7d0d8d1fed2d7cddfd5dbd0ca90ddd1d3"><span class="__cf_email__" data-cfemail="1e777078715e72776d7f757b706a307d7173">[email&#160;protected]</spa
